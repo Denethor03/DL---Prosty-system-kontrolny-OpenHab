@@ -153,9 +153,9 @@ void MQTTSwitch (char* msg, int pinNumber)
     digitalWrite(pinNumber, LOW); 
   }
 
-  if(strcmp(msg, "ON") == 0){
+  if(strcmp(msg, "alarmON") == 0){
     motionSensorOn = true;
-  }else{
+  }else if(strcmp(msg, "alarmOFF") == 0){
     motionSensorOn = false;
     digitalWrite(buzzer, LOW);
   }
