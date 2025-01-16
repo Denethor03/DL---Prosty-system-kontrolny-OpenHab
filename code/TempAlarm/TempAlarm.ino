@@ -4,11 +4,11 @@
 #include <PubSubClient.h>
 
 // dane WiFi
-const char* ssid = "PENTAGRAM";     // SSID naszej sieci
-const char* password = "wifipassword";  // hasło naszej sieci
+const char* ssid = "NETWORK";     // SSID naszej sieci
+const char* password = "987654321";  // hasło naszej sieci
 
 // dane do połączenia z brokerem MQTT
-const char* mqttServer = "192.168.1.105";  // adres IP brokera Mosquitto
+const char* mqttServer = "192.168.59.165";  // adres IP brokera Mosquitto
 const int mqttPort = 1883;                 // domyślny port MQTT
 const char* mqttUser = "";                 // jeśli nie ma loginu - zostaw puste
 const char* mqttPassword = "";           // jeśli nie ma hasła - zostaw puste
@@ -36,6 +36,7 @@ void IRAM_ATTR motionDetectedISR() {
   if(motionSensorOn){
     digitalWrite(buzzer, HIGH);
     Serial.println("Motion detected!");
+    client.publish("sensor/movement", "Motion detected!");
   }
 }
 
@@ -158,6 +159,7 @@ void MQTTSwitch (char* msg, int pinNumber)
   }else if(strcmp(msg, "alarmOFF") == 0){
     motionSensorOn = false;
     digitalWrite(buzzer, LOW);
+    client.publish("sensor/movement", "Alarm Off");
   }
 }
 
